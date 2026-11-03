@@ -1,0 +1,22 @@
+{
+  "team_number": "T0050",
+  "group_lead": {
+    "name": "Kunal Gupta",
+    "enrollment_no": "2501010586",
+    "github": "Kunal241207"
+  },
+  "members": [
+    {
+      "name": "Rahil Paliwal",
+      "enrollment_no": "2501010652",
+      "github": "rahil-bit"
+    },
+    {
+      "name": "Anukalp Kumar",
+      "enrollment_no": "2501010073",
+      "github": "anukalp16"
+    }
+  ],
+  "postgres_version": "PostgreSQL 17",
+  "laptop_used_for_benchmarks": "Apple MacBook Pro M4 Pro"
+}
