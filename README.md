@@ -18,16 +18,15 @@
 
 ---
 
-## Team details (fill in before you start)
+## Team details
 
 | Role | Name | Enrollment No. | GitHub Username |
 |------|------|----------------|-----------------|
-| Group Lead | | | |
-| Member 2 | | | |
-| Member 3 | | | |
-| Member 4 | | | |
+| Group Lead | Kunal Gupta | 2501010586 | Kunal241207 |
+| Member 2 | Rahil Paliwal | 2501010652 | rahil-bit |
+| Member 3 | Anukalp Kumar | 2501010073 | anukalp16 |
 
-**Team No.:** ____ · **Section:** ____ · **Repository URL:** ____
+**Team No.:** T0050 · **Section:** C · **Repository URL:** https://github.com/Kunal241207/DE_Project_2026
 
 ---
 
