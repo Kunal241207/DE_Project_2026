@@ -1,0 +1,484 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1850 1250" width="1850" height="1250" style="background:#0b1120; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="112%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+
+    <!-- Crow's foot markers -->
+    <!-- 1. Zero or Many (O<) -->
+    <marker id="zero-or-many" viewBox="0 0 24 16" refX="22" refY="8" markerWidth="18" markerHeight="12" orient="auto">
+      <circle cx="6" cy="8" r="4" fill="#0b1120" stroke="#94a3b8" stroke-width="2"/>
+      <path d="M 14 2 L 22 8 L 14 14 M 22 2 L 22 14" fill="none" stroke="#94a3b8" stroke-width="2"/>
+    </marker>
+
+    <!-- 2. Exactly One (||) -->
+    <marker id="exactly-one" viewBox="0 0 16 16" refX="2" refY="8" markerWidth="12" markerHeight="12" orient="auto">
+      <line x1="6" y1="2" x2="6" y2="14" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="11" y1="2" x2="11" y2="14" stroke="#94a3b8" stroke-width="2"/>
+    </marker>
+
+    <!-- 3. Zero or One (O|) -->
+    <marker id="zero-or-one" viewBox="0 0 18 16" refX="2" refY="8" markerWidth="14" markerHeight="12" orient="auto">
+      <circle cx="11" cy="8" r="4" fill="#0b1120" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="4" y1="2" x2="4" y2="14" stroke="#94a3b8" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <!-- Title & Architect Header -->
+  <text x="50" y="50" fill="#f8fafc" font-size="24" font-weight="bold" letter-spacing="0.5">Google Maps Navigation Database — Relational Architecture (ERD)</text>
+  <text x="50" y="75" fill="#94a3b8" font-size="13">PostgreSQL 15+ Schema (gmaps) | 11 Core Entities | Crow's Foot Notation | 3NF / BCNF Architecture</text>
+
+  <!-- TABLE 1: cities (x: 400, y: 110, w: 280, h: 145) -->
+  <g transform="translate(400, 110)" filter="url(#card-shadow)">
+    <rect width="280" height="145" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <path d="M 0 0 h 280 v 34 h -280 z" fill="#3b82f6" rx="8"/>
+    <rect y="26" width="280" height="8" fill="#3b82f6"/>
+    <text x="14" y="23" fill="#ffffff" font-size="14" font-weight="bold">cities</text>
+    <text x="220" y="23" fill="#dbeafe" font-size="11">10 rows</text>
+    <!-- cols -->
+    <text x="14" y="56" fill="#f59e0b" font-size="11" font-weight="bold">PK</text>
+    <text x="44" y="56" fill="#f8fafc" font-size="12" font-weight="600">city_id</text>
+    <text x="180" y="56" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="14" y="80" fill="#10b981" font-size="11" font-weight="bold">UQ</text>
+    <text x="44" y="80" fill="#f8fafc" font-size="12">city_name</text>
+    <text x="180" y="80" fill="#94a3b8" font-size="11">VARCHAR(50)</text>
+
+    <text x="44" y="104" fill="#cbd5e1" font-size="12">center_lat</text>
+    <text x="180" y="104" fill="#94a3b8" font-size="11">NUMERIC(9,6)</text>
+
+    <text x="44" y="128" fill="#cbd5e1" font-size="12">center_lng</text>
+    <text x="180" y="128" fill="#94a3b8" font-size="11">NUMERIC(9,6)</text>
+  </g>
+
+  <!-- TABLE 2: place_categories (x: 50, y: 110, w: 260, h: 100) -->
+  <g transform="translate(50, 110)" filter="url(#card-shadow)">
+    <rect width="260" height="100" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <path d="M 0 0 h 260 v 34 h -260 z" fill="#3b82f6" rx="8"/>
+    <rect y="26" width="260" height="8" fill="#3b82f6"/>
+    <text x="14" y="23" fill="#ffffff" font-size="14" font-weight="bold">place_categories</text>
+    <text x="205" y="23" fill="#dbeafe" font-size="11">12 rows</text>
+    <!-- cols -->
+    <text x="14" y="56" fill="#f59e0b" font-size="11" font-weight="bold">PK</text>
+    <text x="44" y="56" fill="#f8fafc" font-size="12" font-weight="600">category_id</text>
+    <text x="175" y="56" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="14" y="80" fill="#10b981" font-size="11" font-weight="bold">UQ</text>
+    <text x="44" y="80" fill="#f8fafc" font-size="12">category_name</text>
+    <text x="175" y="80" fill="#94a3b8" font-size="11">VARCHAR(50)</text>
+  </g>
+
+  <!-- TABLE 3: places (x: 400, y: 320, w: 310, h: 420) -->
+  <g transform="translate(400, 320)" filter="url(#card-shadow)">
+    <rect width="310" height="420" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
+    <path d="M 0 0 h 310 v 34 h -310 z" fill="#6366f1" rx="8"/>
+    <rect y="26" width="310" height="8" fill="#6366f1"/>
+    <text x="14" y="23" fill="#ffffff" font-size="14" font-weight="bold">places</text>
+    <text x="220" y="23" fill="#e0e7ff" font-size="11">40,042 rows</text>
+    <!-- cols -->
+    <text x="14" y="56" fill="#f59e0b" font-size="11" font-weight="bold">PK</text>
+    <text x="44" y="56" fill="#f8fafc" font-size="12" font-weight="600">place_id</text>
+    <text x="195" y="56" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="14" y="80" fill="#10b981" font-size="11" font-weight="bold">UQ</text>
+    <text x="44" y="80" fill="#f8fafc" font-size="12">plus_code</text>
+    <text x="195" y="80" fill="#94a3b8" font-size="11">VARCHAR(20)</text>
+
+    <text x="44" y="104" fill="#cbd5e1" font-size="12">name</text>
+    <text x="195" y="104" fill="#94a3b8" font-size="11">VARCHAR(255)</text>
+
+    <text x="14" y="128" fill="#38bdf8" font-size="11" font-weight="bold">FK</text>
+    <text x="44" y="128" fill="#f8fafc" font-size="12">category_id</text>
+    <text x="195" y="128" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="14" y="152" fill="#38bdf8" font-size="11" font-weight="bold">FK</text>
+    <text x="44" y="152" fill="#f8fafc" font-size="12">city_id</text>
+    <text x="195" y="152" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="44" y="176" fill="#cbd5e1" font-size="12">latitude</text>
+    <text x="195" y="176" fill="#94a3b8" font-size="11">NUMERIC(9,6)</text>
+
+    <text x="44" y="200" fill="#cbd5e1" font-size="12">longitude</text>
+    <text x="195" y="200" fill="#94a3b8" font-size="11">NUMERIC(9,6)</text>
+
+    <text x="44" y="224" fill="#cbd5e1" font-size="12">address</text>
+    <text x="195" y="224" fill="#94a3b8" font-size="11">TEXT</text>
+
+    <text x="44" y="248" fill="#cbd5e1" font-size="12">phone</text>
+    <text x="195" y="248" fill="#94a3b8" font-size="11">VARCHAR(30)</text>
+
+    <text x="44" y="272" fill="#cbd5e1" font-size="12">website</text>
+    <text x="195" y="272" fill="#94a3b8" font-size="11">VARCHAR(255)</text>
+
+    <text x="44" y="296" fill="#cbd5e1" font-size="12">price_level</text>
+    <text x="195" y="296" fill="#94a3b8" font-size="11">SMALLINT</text>
+
+    <text x="44" y="320" fill="#cbd5e1" font-size="12">avg_rating</text>
+    <text x="195" y="320" fill="#94a3b8" font-size="11">NUMERIC(2,1)</text>
+
+    <text x="44" y="344" fill="#cbd5e1" font-size="12">review_count</text>
+    <text x="195" y="344" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="44" y="368" fill="#cbd5e1" font-size="12">is_permanently_closed</text>
+    <text x="195" y="368" fill="#94a3b8" font-size="11">BOOLEAN</text>
+
+    <text x="44" y="392" fill="#cbd5e1" font-size="12">created_at</text>
+    <text x="195" y="392" fill="#94a3b8" font-size="11">TIMESTAMPTZ</text>
+  </g>
+
+  <!-- TABLE 4: opening_hours (x: 50, y: 320, w: 260, h: 145) -->
+  <g transform="translate(50, 320)" filter="url(#card-shadow)">
+    <rect width="260" height="145" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <path d="M 0 0 h 260 v 34 h -260 z" fill="#8b5cf6" rx="8"/>
+    <rect y="26" width="260" height="8" fill="#8b5cf6"/>
+    <text x="14" y="23" fill="#ffffff" font-size="14" font-weight="bold">opening_hours</text>
+    <text x="175" y="23" fill="#ede9fe" font-size="11">252,266 rows</text>
+    <!-- cols -->
+    <text x="14" y="56" fill="#f59e0b" font-size="11" font-weight="bold">PK,FK</text>
+    <text x="65" y="56" fill="#f8fafc" font-size="12" font-weight="600">place_id</text>
+    <text x="180" y="56" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="14" y="80" fill="#f59e0b" font-size="11" font-weight="bold">PK</text>
+    <text x="65" y="80" fill="#f8fafc" font-size="12" font-weight="600">weekday</text>
+    <text x="180" y="80" fill="#94a3b8" font-size="11">SMALLINT</text>
+
+    <text x="65" y="104" fill="#cbd5e1" font-size="12">opens</text>
+    <text x="180" y="104" fill="#94a3b8" font-size="11">TIME</text>
+
+    <text x="65" y="128" fill="#cbd5e1" font-size="12">closes</text>
+    <text x="180" y="128" fill="#94a3b8" font-size="11">TIME</text>
+  </g>
+
+  <!-- TABLE 5: saved_places (x: 50, y: 550, w: 270, h: 145) -->
+  <g transform="translate(50, 550)" filter="url(#card-shadow)">
+    <rect width="270" height="145" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <path d="M 0 0 h 270 v 34 h -270 z" fill="#f59e0b" rx="8"/>
+    <rect y="26" width="270" height="8" fill="#f59e0b"/>
+    <text x="14" y="23" fill="#ffffff" font-size="14" font-weight="bold">saved_places</text>
+    <text x="185" y="23" fill="#fef3c7" font-size="11">50,000 rows</text>
+    <!-- cols -->
+    <text x="14" y="56" fill="#f59e0b" font-size="11" font-weight="bold">PK,FK</text>
+    <text x="65" y="56" fill="#f8fafc" font-size="12" font-weight="600">user_id</text>
+    <text x="180" y="56" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="14" y="80" fill="#f59e0b" font-size="11" font-weight="bold">PK,FK</text>
+    <text x="65" y="80" fill="#f8fafc" font-size="12" font-weight="600">place_id</text>
+    <text x="180" y="80" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="14" y="104" fill="#f59e0b" font-size="11" font-weight="bold">PK</text>
+    <text x="65" y="104" fill="#f8fafc" font-size="12" font-weight="600">list_name</text>
+    <text x="180" y="104" fill="#94a3b8" font-size="11">VARCHAR(50)</text>
+
+    <text x="65" y="128" fill="#cbd5e1" font-size="12">saved_at</text>
+    <text x="180" y="128" fill="#94a3b8" font-size="11">TIMESTAMPTZ</text>
+  </g>
+
+  <!-- TABLE 6: place_reviews (x: 400, y: 810, w: 300, h: 220) -->
+  <g transform="translate(400, 810)" filter="url(#card-shadow)">
+    <rect width="300" height="220" rx="8" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+    <path d="M 0 0 h 300 v 34 h -300 z" fill="#ec4899" rx="8"/>
+    <rect y="26" width="300" height="8" fill="#ec4899"/>
+    <text x="14" y="23" fill="#ffffff" font-size="14" font-weight="bold">place_reviews</text>
+    <text x="210" y="23" fill="#fce7f3" font-size="11">89,998 rows</text>
+    <!-- cols -->
+    <text x="14" y="56" fill="#f59e0b" font-size="11" font-weight="bold">PK</text>
+    <text x="44" y="56" fill="#f8fafc" font-size="12" font-weight="600">review_id</text>
+    <text x="185" y="56" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="14" y="80" fill="#38bdf8" font-size="11" font-weight="bold">FK,UQ</text>
+    <text x="65" y="80" fill="#f8fafc" font-size="12">place_id</text>
+    <text x="185" y="80" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="14" y="104" fill="#38bdf8" font-size="11" font-weight="bold">FK,UQ</text>
+    <text x="65" y="104" fill="#f8fafc" font-size="12">user_id</text>
+    <text x="185" y="104" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="44" y="128" fill="#cbd5e1" font-size="12">rating</text>
+    <text x="185" y="128" fill="#94a3b8" font-size="11">SMALLINT</text>
+
+    <text x="44" y="152" fill="#cbd5e1" font-size="12">review_text</text>
+    <text x="185" y="152" fill="#94a3b8" font-size="11">TEXT</text>
+
+    <text x="44" y="176" fill="#cbd5e1" font-size="12">photo_count</text>
+    <text x="185" y="176" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="44" y="200" fill="#cbd5e1" font-size="12">created_at</text>
+    <text x="185" y="200" fill="#94a3b8" font-size="11">TIMESTAMPTZ</text>
+  </g>
+
+  <!-- TABLE 7: users (x: 770, y: 440, w: 270, h: 220) -->
+  <g transform="translate(770, 440)" filter="url(#card-shadow)">
+    <rect width="270" height="220" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <path d="M 0 0 h 270 v 34 h -270 z" fill="#10b981" rx="8"/>
+    <rect y="26" width="270" height="8" fill="#10b981"/>
+    <text x="14" y="23" fill="#ffffff" font-size="14" font-weight="bold">users</text>
+    <text x="185" y="23" fill="#d1fae5" font-size="11">40,000 rows</text>
+    <!-- cols -->
+    <text x="14" y="56" fill="#f59e0b" font-size="11" font-weight="bold">PK</text>
+    <text x="44" y="56" fill="#f8fafc" font-size="12" font-weight="600">user_id</text>
+    <text x="175" y="56" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="44" y="80" fill="#cbd5e1" font-size="12">display_name</text>
+    <text x="175" y="80" fill="#94a3b8" font-size="11">VARCHAR(100)</text>
+
+    <text x="14" y="104" fill="#10b981" font-size="11" font-weight="bold">UQ</text>
+    <text x="44" y="104" fill="#f8fafc" font-size="12">email</text>
+    <text x="175" y="104" fill="#94a3b8" font-size="11">VARCHAR(255)</text>
+
+    <text x="14" y="128" fill="#38bdf8" font-size="11" font-weight="bold">FK</text>
+    <text x="44" y="128" fill="#f8fafc" font-size="12">home_city_id</text>
+    <text x="175" y="128" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="44" y="152" fill="#cbd5e1" font-size="12">is_local_guide</text>
+    <text x="175" y="152" fill="#94a3b8" font-size="11">BOOLEAN</text>
+
+    <text x="44" y="176" fill="#cbd5e1" font-size="12">guide_level</text>
+    <text x="175" y="176" fill="#94a3b8" font-size="11">SMALLINT</text>
+
+    <text x="44" y="200" fill="#cbd5e1" font-size="12">created_at</text>
+    <text x="175" y="200" fill="#94a3b8" font-size="11">TIMESTAMPTZ</text>
+  </g>
+
+  <!-- TABLE 8: road_segments (x: 770, y: 110, w: 290, h: 290) -->
+  <g transform="translate(770, 110)" filter="url(#card-shadow)">
+    <rect width="290" height="290" rx="8" fill="#1e293b" stroke="#06b6d4" stroke-width="2"/>
+    <path d="M 0 0 h 290 v 34 h -290 z" fill="#06b6d4" rx="8"/>
+    <rect y="26" width="290" height="8" fill="#06b6d4"/>
+    <text x="14" y="23" fill="#ffffff" font-size="14" font-weight="bold">road_segments</text>
+    <text x="210" y="23" fill="#cffafe" font-size="11">2,000 rows</text>
+    <!-- cols -->
+    <text x="14" y="56" fill="#f59e0b" font-size="11" font-weight="bold">PK</text>
+    <text x="44" y="56" fill="#f8fafc" font-size="12" font-weight="600">segment_id</text>
+    <text x="180" y="56" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="44" y="80" fill="#cbd5e1" font-size="12">road_name</text>
+    <text x="180" y="80" fill="#94a3b8" font-size="11">VARCHAR(255)</text>
+
+    <text x="14" y="104" fill="#38bdf8" font-size="11" font-weight="bold">FK</text>
+    <text x="44" y="104" fill="#f8fafc" font-size="12">city_id</text>
+    <text x="180" y="104" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="44" y="128" fill="#cbd5e1" font-size="12">road_type</text>
+    <text x="180" y="128" fill="#94a3b8" font-size="11">VARCHAR(20)</text>
+
+    <text x="44" y="152" fill="#cbd5e1" font-size="12">start_lat</text>
+    <text x="180" y="152" fill="#94a3b8" font-size="11">NUMERIC(9,6)</text>
+
+    <text x="44" y="176" fill="#cbd5e1" font-size="12">start_lng</text>
+    <text x="180" y="176" fill="#94a3b8" font-size="11">NUMERIC(9,6)</text>
+
+    <text x="44" y="200" fill="#cbd5e1" font-size="12">end_lat</text>
+    <text x="180" y="200" fill="#94a3b8" font-size="11">NUMERIC(9,6)</text>
+
+    <text x="44" y="224" fill="#cbd5e1" font-size="12">end_lng</text>
+    <text x="180" y="224" fill="#94a3b8" font-size="11">NUMERIC(9,6)</text>
+
+    <text x="44" y="248" fill="#cbd5e1" font-size="12">length_m</text>
+    <text x="180" y="248" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="44" y="272" fill="#cbd5e1" font-size="12">speed_limit_kmph</text>
+    <text x="180" y="272" fill="#94a3b8" font-size="11">INT</text>
+  </g>
+
+  <!-- TABLE 9: traffic_readings (x: 1140, y: 110, w: 280, h: 170) -->
+  <g transform="translate(1140, 110)" filter="url(#card-shadow)">
+    <rect width="280" height="170" rx="8" fill="#1e293b" stroke="#14b8a6" stroke-width="2"/>
+    <path d="M 0 0 h 280 v 34 h -280 z" fill="#14b8a6" rx="8"/>
+    <rect y="26" width="280" height="8" fill="#14b8a6"/>
+    <text x="14" y="23" fill="#ffffff" font-size="14" font-weight="bold">traffic_readings</text>
+    <text x="185" y="23" fill="#ccfbf1" font-size="11">250,000 rows</text>
+    <!-- cols -->
+    <text x="14" y="56" fill="#f59e0b" font-size="11" font-weight="bold">PK</text>
+    <text x="44" y="56" fill="#f8fafc" font-size="12" font-weight="600">reading_id</text>
+    <text x="175" y="56" fill="#94a3b8" font-size="11">BIGINT</text>
+
+    <text x="14" y="80" fill="#38bdf8" font-size="11" font-weight="bold">FK,UQ</text>
+    <text x="65" y="80" fill="#f8fafc" font-size="12">segment_id</text>
+    <text x="175" y="80" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="14" y="104" fill="#10b981" font-size="11" font-weight="bold">UQ</text>
+    <text x="44" y="104" fill="#cbd5e1" font-size="12">recorded_at</text>
+    <text x="175" y="104" fill="#94a3b8" font-size="11">TIMESTAMPTZ</text>
+
+    <text x="44" y="128" fill="#cbd5e1" font-size="12">avg_speed_kmph</text>
+    <text x="175" y="128" fill="#94a3b8" font-size="11">NUMERIC(5,2)</text>
+
+    <text x="44" y="152" fill="#cbd5e1" font-size="12">congestion_level</text>
+    <text x="175" y="152" fill="#94a3b8" font-size="11">VARCHAR(20)</text>
+  </g>
+
+  <!-- TABLE 10: navigation_sessions (x: 1140, y: 350, w: 320, h: 360) -->
+  <g transform="translate(1140, 350)" filter="url(#card-shadow)">
+    <rect width="320" height="360" rx="8" fill="#1e293b" stroke="#f97316" stroke-width="2"/>
+    <path d="M 0 0 h 320 v 34 h -320 z" fill="#f97316" rx="8"/>
+    <rect y="26" width="320" height="8" fill="#f97316"/>
+    <text x="14" y="23" fill="#ffffff" font-size="14" font-weight="bold">navigation_sessions</text>
+    <text x="225" y="23" fill="#ffedd5" font-size="11">200,000 rows</text>
+    <!-- cols -->
+    <text x="14" y="56" fill="#f59e0b" font-size="11" font-weight="bold">PK</text>
+    <text x="44" y="56" fill="#f8fafc" font-size="12" font-weight="600">session_id</text>
+    <text x="200" y="56" fill="#94a3b8" font-size="11">BIGINT</text>
+
+    <text x="14" y="80" fill="#38bdf8" font-size="11" font-weight="bold">FK</text>
+    <text x="44" y="80" fill="#f8fafc" font-size="12">user_id</text>
+    <text x="200" y="80" fill="#94a3b8" font-size="11">INT (null)</text>
+
+    <text x="14" y="104" fill="#38bdf8" font-size="11" font-weight="bold">FK</text>
+    <text x="44" y="104" fill="#f8fafc" font-size="12">origin_place_id</text>
+    <text x="200" y="104" fill="#94a3b8" font-size="11">INT (null)</text>
+
+    <text x="44" y="128" fill="#cbd5e1" font-size="12">origin_lat</text>
+    <text x="200" y="128" fill="#94a3b8" font-size="11">NUMERIC(9,6)</text>
+
+    <text x="44" y="152" fill="#cbd5e1" font-size="12">origin_lng</text>
+    <text x="200" y="152" fill="#94a3b8" font-size="11">NUMERIC(9,6)</text>
+
+    <text x="14" y="176" fill="#38bdf8" font-size="11" font-weight="bold">FK</text>
+    <text x="44" y="176" fill="#f8fafc" font-size="12">dest_place_id</text>
+    <text x="200" y="176" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="44" y="200" fill="#cbd5e1" font-size="12">travel_mode</text>
+    <text x="200" y="200" fill="#94a3b8" font-size="11">VARCHAR(20)</text>
+
+    <text x="44" y="224" fill="#cbd5e1" font-size="12">started_at</text>
+    <text x="200" y="224" fill="#94a3b8" font-size="11">TIMESTAMPTZ</text>
+
+    <text x="44" y="248" fill="#cbd5e1" font-size="12">distance_km</text>
+    <text x="200" y="248" fill="#94a3b8" font-size="11">NUMERIC(6,2)</text>
+
+    <text x="44" y="272" fill="#cbd5e1" font-size="12">eta_minutes</text>
+    <text x="200" y="272" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="44" y="296" fill="#cbd5e1" font-size="12">actual_minutes</text>
+    <text x="200" y="296" fill="#94a3b8" font-size="11">INT (null)</text>
+
+    <text x="44" y="320" fill="#cbd5e1" font-size="12">rerouted_count</text>
+    <text x="200" y="320" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="44" y="344" fill="#cbd5e1" font-size="12">status</text>
+    <text x="200" y="344" fill="#94a3b8" font-size="11">VARCHAR(20)</text>
+  </g>
+
+  <!-- TABLE 11: incident_reports (x: 1510, y: 110, w: 280, h: 220) -->
+  <g transform="translate(1510, 110)" filter="url(#card-shadow)">
+    <rect width="280" height="220" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+    <path d="M 0 0 h 280 v 34 h -280 z" fill="#ef4444" rx="8"/>
+    <rect y="26" width="280" height="8" fill="#ef4444"/>
+    <text x="14" y="23" fill="#ffffff" font-size="14" font-weight="bold">incident_reports</text>
+    <text x="185" y="23" fill="#fee2e2" font-size="11">12,000 rows</text>
+    <!-- cols -->
+    <text x="14" y="56" fill="#f59e0b" font-size="11" font-weight="bold">PK</text>
+    <text x="44" y="56" fill="#f8fafc" font-size="12" font-weight="600">report_id</text>
+    <text x="180" y="56" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="14" y="80" fill="#38bdf8" font-size="11" font-weight="bold">FK</text>
+    <text x="44" y="80" fill="#f8fafc" font-size="12">segment_id</text>
+    <text x="180" y="80" fill="#94a3b8" font-size="11">INT</text>
+
+    <text x="14" y="104" fill="#38bdf8" font-size="11" font-weight="bold">FK</text>
+    <text x="44" y="104" fill="#f8fafc" font-size="12">user_id</text>
+    <text x="180" y="104" fill="#94a3b8" font-size="11">INT (null)</text>
+
+    <text x="44" y="128" fill="#cbd5e1" font-size="12">incident_type</text>
+    <text x="180" y="128" fill="#94a3b8" font-size="11">VARCHAR(20)</text>
+
+    <text x="44" y="152" fill="#cbd5e1" font-size="12">reported_at</text>
+    <text x="180" y="152" fill="#94a3b8" font-size="11">TIMESTAMPTZ</text>
+
+    <text x="44" y="176" fill="#cbd5e1" font-size="12">expires_at</text>
+    <text x="180" y="176" fill="#94a3b8" font-size="11">TIMESTAMPTZ</text>
+
+    <text x="44" y="200" fill="#cbd5e1" font-size="12">upvotes</text>
+    <text x="180" y="200" fill="#94a3b8" font-size="11">INT</text>
+  </g>
+
+  <!-- RELATIONSHIP CONNECTORS (Crow's foot notation) -->
+
+  <!-- 1. place_categories (1) -> places (N) -->
+  <path d="M 310 160 L 355 160 L 355 370 L 400 370" fill="none" stroke="#94a3b8" stroke-width="2" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+  <text x="325" y="260" fill="#38bdf8" font-size="10" font-weight="bold">categorizes</text>
+
+  <!-- 2. cities (1) -> places (N) -->
+  <path d="M 470 255 L 470 320" fill="none" stroke="#94a3b8" stroke-width="2" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+  <text x="478" y="290" fill="#38bdf8" font-size="10" font-weight="bold">hosts</text>
+
+  <!-- 3. cities (1) -> road_segments (N) -->
+  <path d="M 680 180 L 770 180" fill="none" stroke="#94a3b8" stroke-width="2" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+  <text x="705" y="172" fill="#38bdf8" font-size="10" font-weight="bold">contains</text>
+
+  <!-- 4. cities (1) -> users (0..1) (home_city_id) -->
+  <path d="M 630 255 L 630 295 L 810 295 L 810 440" fill="none" stroke="#94a3b8" stroke-width="2" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+  <text x="690" y="310" fill="#10b981" font-size="10" font-weight="bold">resides_in (optional)</text>
+
+  <!-- 5. places (1) -> opening_hours (N) -->
+  <path d="M 400 400 L 355 400 L 355 400 L 310 400" fill="none" stroke="#94a3b8" stroke-width="2" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+  <text x="325" y="392" fill="#8b5cf6" font-size="10" font-weight="bold">operates</text>
+
+  <!-- 6. places (1) -> saved_places (N) -->
+  <path d="M 400 620 L 320 620" fill="none" stroke="#94a3b8" stroke-width="2" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+  <text x="335" y="612" fill="#f59e0b" font-size="10" font-weight="bold">saved_in</text>
+
+  <!-- 7. users (1) -> saved_places (N) -->
+  <path d="M 770 590 L 740 590 L 740 660 L 320 660" fill="none" stroke="#94a3b8" stroke-width="2" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+  <text x="540" y="652" fill="#f59e0b" font-size="10" font-weight="bold">bookmarks</text>
+
+  <!-- 8. places (1) -> place_reviews (N) -->
+  <path d="M 500 740 L 500 810" fill="none" stroke="#94a3b8" stroke-width="2" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+  <text x="508" y="775" fill="#ec4899" font-size="10" font-weight="bold">reviews</text>
+
+  <!-- 9. users (1) -> place_reviews (N) -->
+  <path d="M 850 660 L 850 880 L 700 880" fill="none" stroke="#94a3b8" stroke-width="2" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+  <text x="740" y="872" fill="#ec4899" font-size="10" font-weight="bold">authors</text>
+
+  <!-- 10. road_segments (1) -> traffic_readings (N) -->
+  <path d="M 1060 180 L 1140 180" fill="none" stroke="#94a3b8" stroke-width="2" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+  <text x="1075" y="172" fill="#14b8a6" font-size="10" font-weight="bold">telemetry</text>
+
+  <!-- 11. road_segments (1) -> incident_reports (N) -->
+  <path d="M 1060 220 L 1280 220 L 1280 80 L 1650 80 L 1650 110" fill="none" stroke="#94a3b8" stroke-width="2" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+  <text x="1330" y="74" fill="#ef4444" font-size="10" font-weight="bold">road_hazard</text>
+
+  <!-- 12. users (1) -> incident_reports (0..1) -->
+  <path d="M 1040 500 L 1090 500 L 1090 310 L 1510 310" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+  <text x="1270" y="302" fill="#ef4444" font-size="10" font-weight="bold">reports (optional)</text>
+
+  <!-- 13. users (1) -> navigation_sessions (0..1) -->
+  <path d="M 1040 450 L 1140 450" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+  <text x="1055" y="442" fill="#f97316" font-size="10" font-weight="bold">drives (optional)</text>
+
+  <!-- 14. places (1) -> navigation_sessions (origin, 0..1) -->
+  <path d="M 710 420 L 740 420 L 740 480 L 1140 480" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+  <text x="745" y="472" fill="#f97316" font-size="10" font-weight="bold">origin (optional)</text>
+
+  <!-- 15. places (1) -> navigation_sessions (destination, 1) -->
+  <path d="M 710 460 L 730 460 L 730 520 L 1140 520" fill="none" stroke="#94a3b8" stroke-width="2" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+  <text x="745" y="512" fill="#f97316" font-size="10" font-weight="bold">destination (mandatory)</text>
+
+  <!-- LEGEND -->
+  <g transform="translate(50, 1100)">
+    <rect width="1740" height="90" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+    <text x="24" y="32" fill="#f8fafc" font-size="13" font-weight="bold">Architectural Notation &amp; Legend</text>
+
+    <!-- badges -->
+    <rect x="24" y="48" width="28" height="18" rx="3" fill="#f59e0b"/>
+    <text x="28" y="62" fill="#0b1120" font-size="10" font-weight="bold">PK</text>
+    <text x="60" y="62" fill="#cbd5e1" font-size="11">Primary Key</text>
+
+    <rect x="150" y="48" width="28" height="18" rx="3" fill="#38bdf8"/>
+    <text x="154" y="62" fill="#0b1120" font-size="10" font-weight="bold">FK</text>
+    <text x="186" y="62" fill="#cbd5e1" font-size="11">Foreign Key</text>
+
+    <rect x="270" y="48" width="28" height="18" rx="3" fill="#10b981"/>
+    <text x="274" y="62" fill="#0b1120" font-size="10" font-weight="bold">UQ</text>
+    <text x="306" y="62" fill="#cbd5e1" font-size="11">Unique Constraint</text>
+
+    <!-- connectors -->
+    <line x1="430" y1="57" x2="490" y2="57" stroke="#94a3b8" stroke-width="2" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+    <text x="500" y="62" fill="#cbd5e1" font-size="11">Mandatory One-to-Many (|| to O&lt;)</text>
+
+    <line x1="720" y1="57" x2="780" y2="57" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4" marker-start="url(#exactly-one)" marker-end="url(#zero-or-many)"/>
+    <text x="790" y="62" fill="#cbd5e1" font-size="11">Optional One-to-Many (Nullable Foreign Key)</text>
+
+    <text x="1100" y="62" fill="#94a3b8" font-size="11">Normal Form: 3NF / BCNF Certified | Controlled Denormalization: avg_rating, review_count, congestion_level</text>
+  </g>
+</svg>
