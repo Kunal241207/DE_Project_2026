@@ -1,0 +1,90 @@
+=== R04 run 1 ===
+Limit  (cost=8304.01..8307.42 rows=30 width=45) (actual time=22.283..23.588 rows=30.00 loops=1)
+  Buffers: shared hit=3479
+  ->  Gather Merge  (cost=8304.01..8392.56 rows=777 width=45) (actual time=22.282..23.586 rows=30.00 loops=1)
+        Workers Planned: 1
+        Workers Launched: 1
+        Buffers: shared hit=3479
+        ->  Sort  (cost=7304.00..7305.14 rows=457 width=45) (actual time=20.036..20.038 rows=23.50 loops=2)
+              Sort Key: p.avg_rating DESC NULLS LAST
+              Sort Method: top-N heapsort  Memory: 29kB
+              Buffers: shared hit=3479
+              Worker 0:  Sort Method: top-N heapsort  Memory: 29kB
+              ->  Hash Join  (cost=1538.68..7290.50 rows=457 width=45) (actual time=6.077..19.910 rows=132.00 loops=2)
+                    Hash Cond: (h.place_id = p.place_id)
+                    Buffers: shared hit=3472
+                    ->  Parallel Seq Scan on opening_hours h  (cost=0.00..5728.77 rows=8779 width=20) (actual time=0.013..13.049 rows=6669.00 loops=2)
+                          Filter: ((weekday = 6) AND (((opens < closes) AND ('23:30:00'::time without time zone >= opens) AND ('23:30:00'::time without time zone <= closes)) OR ((opens > closes) AND (('23:30:00'::time without time zone >= opens) OR ('23:30:00'::time without time zone < closes)))))
+                          Rows Removed by Filter: 119464
+                          Buffers: shared hit=1648
+                    ->  Hash  (cost=1512.63..1512.63 rows=2084 width=29) (actual time=5.975..5.975 rows=2121.00 loops=2)
+                          Buckets: 4096  Batches: 1  Memory Usage: 157kB
+                          Buffers: shared hit=1824
+                          ->  Seq Scan on places p  (cost=0.00..1512.63 rows=2084 width=29) (actual time=0.051..5.596 rows=2121.00 loops=2)
+                                Filter: ((NOT is_permanently_closed) AND (city_id = 1) AND (category_id = 1))
+                                Rows Removed by Filter: 37921
+                                Buffers: shared hit=1824
+Planning:
+  Buffers: shared hit=275
+Planning Time: 0.765 ms
+Execution Time: 23.654 ms
+=== R04 run 2 ===
+Limit  (cost=8304.01..8307.42 rows=30 width=45) (actual time=35.458..37.303 rows=30.00 loops=1)
+  Buffers: shared hit=3479
+  ->  Gather Merge  (cost=8304.01..8392.56 rows=777 width=45) (actual time=35.456..37.297 rows=30.00 loops=1)
+        Workers Planned: 1
+        Workers Launched: 1
+        Buffers: shared hit=3479
+        ->  Sort  (cost=7304.00..7305.14 rows=457 width=45) (actual time=30.534..30.541 rows=25.00 loops=2)
+              Sort Key: p.avg_rating DESC NULLS LAST
+              Sort Method: top-N heapsort  Memory: 29kB
+              Buffers: shared hit=3479
+              Worker 0:  Sort Method: top-N heapsort  Memory: 29kB
+              ->  Hash Join  (cost=1538.68..7290.50 rows=457 width=45) (actual time=9.280..30.408 rows=132.00 loops=2)
+                    Hash Cond: (h.place_id = p.place_id)
+                    Buffers: shared hit=3472
+                    ->  Parallel Seq Scan on opening_hours h  (cost=0.00..5728.77 rows=8779 width=20) (actual time=0.020..19.874 rows=6669.00 loops=2)
+                          Filter: ((weekday = 6) AND (((opens < closes) AND ('23:30:00'::time without time zone >= opens) AND ('23:30:00'::time without time zone <= closes)) OR ((opens > closes) AND (('23:30:00'::time without time zone >= opens) OR ('23:30:00'::time without time zone < closes)))))
+                          Rows Removed by Filter: 119464
+                          Buffers: shared hit=1648
+                    ->  Hash  (cost=1512.63..1512.63 rows=2084 width=29) (actual time=9.011..9.012 rows=2121.00 loops=2)
+                          Buckets: 4096  Batches: 1  Memory Usage: 157kB
+                          Buffers: shared hit=1824
+                          ->  Seq Scan on places p  (cost=0.00..1512.63 rows=2084 width=29) (actual time=0.052..8.429 rows=2121.00 loops=2)
+                                Filter: ((NOT is_permanently_closed) AND (city_id = 1) AND (category_id = 1))
+                                Rows Removed by Filter: 37921
+                                Buffers: shared hit=1824
+Planning:
+  Buffers: shared hit=275
+Planning Time: 1.587 ms
+Execution Time: 37.394 ms
+=== R04 run 3 ===
+Limit  (cost=8304.01..8307.42 rows=30 width=45) (actual time=18.697..20.061 rows=30.00 loops=1)
+  Buffers: shared hit=3479
+  ->  Gather Merge  (cost=8304.01..8392.56 rows=777 width=45) (actual time=18.696..20.058 rows=30.00 loops=1)
+        Workers Planned: 1
+        Workers Launched: 1
+        Buffers: shared hit=3479
+        ->  Sort  (cost=7304.00..7305.14 rows=457 width=45) (actual time=16.428..16.430 rows=26.50 loops=2)
+              Sort Key: p.avg_rating DESC NULLS LAST
+              Sort Method: top-N heapsort  Memory: 29kB
+              Buffers: shared hit=3479
+              Worker 0:  Sort Method: top-N heapsort  Memory: 29kB
+              ->  Hash Join  (cost=1538.68..7290.50 rows=457 width=45) (actual time=6.338..16.337 rows=132.00 loops=2)
+                    Hash Cond: (h.place_id = p.place_id)
+                    Buffers: shared hit=3472
+                    ->  Parallel Seq Scan on opening_hours h  (cost=0.00..5728.77 rows=8779 width=20) (actual time=0.011..9.256 rows=6669.00 loops=2)
+                          Filter: ((weekday = 6) AND (((opens < closes) AND ('23:30:00'::time without time zone >= opens) AND ('23:30:00'::time without time zone <= closes)) OR ((opens > closes) AND (('23:30:00'::time without time zone >= opens) OR ('23:30:00'::time without time zone < closes)))))
+                          Rows Removed by Filter: 119464
+                          Buffers: shared hit=1648
+                    ->  Hash  (cost=1512.63..1512.63 rows=2084 width=29) (actual time=6.147..6.147 rows=2121.00 loops=2)
+                          Buckets: 4096  Batches: 1  Memory Usage: 157kB
+                          Buffers: shared hit=1824
+                          ->  Seq Scan on places p  (cost=0.00..1512.63 rows=2084 width=29) (actual time=0.028..5.778 rows=2121.00 loops=2)
+                                Filter: ((NOT is_permanently_closed) AND (city_id = 1) AND (category_id = 1))
+                                Rows Removed by Filter: 37921
+                                Buffers: shared hit=1824
+Planning:
+  Buffers: shared hit=275
+Planning Time: 0.711 ms
+Execution Time: 20.121 ms
