@@ -9,8 +9,8 @@ This document presents the complete relational database architecture for the Goo
 * **Workload Compatibility**: Preserving exact compatibility with the 11 production seed datasets (55+ MB export) and the 30-query benchmark workload (`queries/workload_30.sql`).
 
 Visual diagrams representing this architecture:
-* High-Resolution Vector Diagram: [`diagrams/er_diagram.svg`](file:///Users/rahilpa/DBMS-Google-Maps-Navigation/diagrams/er_diagram.svg)
-* Production Image Diagram: [`diagrams/er_diagram.png`](file:///Users/rahilpa/DBMS-Google-Maps-Navigation/diagrams/er_diagram.png)
+* High-Resolution Vector Diagram: [`diagrams/er_diagram.svg`](../diagrams/er_diagram.svg)
+* Production Image Diagram: [`diagrams/er_diagram.png`](../diagrams/er_diagram.png)
 
 ---
 
